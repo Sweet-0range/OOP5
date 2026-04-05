@@ -13,7 +13,7 @@ public:
     {
         std::cout << "Деструктор предка\n";
     };
-    virtual void method1()
+    void method1()
     {
         std::cout << "VМетод1 предка\nВызываем метод2\n";
         method2();
@@ -160,7 +160,7 @@ void foo4()
 
 
 int main() {
-    SetConsoleOutputCP(CP_UTF8);                                                //Установка кодовки для Windows
+    SetConsoleOutputCP(CP_UTF8);                                             
     SetConsoleCP(CP_UTF8);
 
     std::cout << "Метод1 у родителя и вызывает переопределённый Метод2 не виртуальный\n";
