@@ -185,35 +185,36 @@ void foo5()
     std::cout << "Создание обьектов диномически HeirClass = new HeirClass\n";
     HeirClass* HC = new HeirClass; 
 
-    std::cout << "Вызов classname у BaseClass = new BaseClass\n";
-    BC1->classname();
+    std::cout << "Вызов classname у BaseClass = new BaseClass\n" << BC1->classname();
 
-    std::cout << "Вызов classname у BaseClass = new HeirClass\n";
-    BC2->classname();
+    std::cout << "Вызов classname у BaseClass = new HeirClass\n" << BC2->classname();
 
-    std::cout << "Вызов classname у HeirClass = new HeirClass:\n";
-    HC->classname();
+    std::cout << "Вызов classname у HeirClass = new HeirClass:\n" << HC->classname();
 
 
+    std::cout << "Проверка isA(BaseClass) у BaseClass = new BaseClass:\n" << BC1->isA("BaseClass");
 
-    std::cout << "Проверка isA(BaseClass) у BaseClass = new BaseClass:\n";
-    BC1->isA("BaseClass");
+    std::cout << "Проверка isA(BaseClass) у BaseClass = new HeirClass:\n"<<BC2->isA("BaseClass");
 
-    std::cout << "Проверка isA(BaseClass) у BaseClass = new HeirClass:\n";
-    BC2->isA("BaseClass");
-
-    std::cout << "Проверка isA(BaseClass) у HeirClass = new HeirClass:\n";
-    HC->isA("BaseClass");
+    std::cout << "Проверка isA(BaseClass) у HeirClass = new HeirClass:\n"<<HC->isA("BaseClass");
 
     
-    std::cout << "Проверка isA(HeirClass) у BaseClass = new BaseClass:\n";
-    BC1->isA("BaseClass");
+    std::cout << "Проверка isA(HeirClass) у BaseClass = new BaseClass:\n"<<BC1->isA("HeirClass");
 
-    std::cout << "Проверка isA(HeirClass) у BaseClass = new HeirClass:\n";
-    BC2->isA("BaseClass");
+    std::cout << "Проверка isA(HeirClass) у BaseClass = new HeirClass:\n"<<BC2->isA("HeirClass");
 
-    std::cout << "Проверка isA(HeirClass) у HeirClass = new HeirClass:\n";
-    HC->isA("BaseClass");
+    std::cout << "Проверка isA(HeirClass) у HeirClass = new HeirClass:\n"<<HC->isA("HeirClass");
+
+    std::cout <<"Приведение типов\nСоздание BaseClass = new HeirClass\n";
+    BaseClass* obj = new HeirClass;
+
+    std::cout <<"Проверка что обьект HeirClass\n";
+    if (obj->isA("HeirClass"))
+    {
+        std::cout <<"Результат проверки if (obj->isA(HeirClass)):" << obj->isA("HeirClass") << std::endl;
+        std::cout <<"Приведение через dynamic_cast<HeirClass*> и вызов метода2\n";
+        dynamic_cast<HeirClass*>(obj)->method2();
+    }
 
     std::cout << "Деструктор BaseClass = new BaseClass\n";
     delete BC1;
@@ -221,6 +222,9 @@ void foo5()
     delete BC2;
     std::cout << "Деструктор HeirClass = new HeirClass:\n";
     delete HC;
+
+    std::cout << "Деструктор у BaseClass = new HeirClass обьекта, который приводили тип:\n";
+    delete obj;
     std::cout << "============================================================\n";
 }
 int main() {
