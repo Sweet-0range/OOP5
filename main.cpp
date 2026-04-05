@@ -1,0 +1,173 @@
+#include "iostream"
+#include "string"
+#include <windows.h>
+
+class BaseClass
+{
+public:
+    BaseClass()
+    {
+        std::cout << "Конструктор предка\n";
+    };
+    virtual ~BaseClass()
+    {
+        std::cout << "Деструктор предка\n";
+    };
+    virtual void method1()
+    {
+        std::cout << "VМетод1 предка\nВызываем метод2\n";
+        method2();
+    };
+    void method2()
+    {
+        std::cout << "Метод2 предка\n";
+    };
+    void method3()
+    {
+        std::cout << "Метод3 предка\n";
+    };
+    virtual void method4()
+    {
+        std::cout << "Метод4 предка\n";
+    };
+};
+
+
+class HeirClass : public BaseClass
+{
+public:
+    HeirClass()
+    {
+        std::cout << "Конструктор потомка\n";
+    };
+    ~HeirClass() override 
+    {
+        std::cout << "Деструктор потомка\n";
+    };
+    /*
+    void method1()
+    {
+        std::cout << "Метод1 потомка\n";
+    };
+    */
+    void method2()
+    {
+         std::cout << "Метод2 потомка\n";
+    };
+    /*
+    void method3()
+    {
+         std::cout << "Метод3 потомка\n";
+    };
+    */
+    void method4() override
+    {
+         std::cout << "Метод4 потомка\n";
+    };
+};
+
+void foo1()
+{
+    std::cout << "============================================================\n";
+    std::cout <<"\nfoo1\nМетод1 у родителя и вызывает Метод2 не виртуальный\n";
+    std::cout << "Создание обьектов статически\nРодитель:\n";
+    BaseClass BC;
+    std::cout << "Потомок:\n";
+    HeirClass HC;
+
+    std::cout << "Вызов метода1 у родителя:\n";
+    BC.method1();
+    std::cout << "Вызов метода1 у потомка:\n";
+    HC.method1();
+    std::cout << "============================================================\n";
+}
+
+void foo2()
+{
+    std::cout << "============================================================\n";
+    std::cout <<"\nfoo2\nМетод1 у родителя и вызывает Метод2 не виртуальный\n";
+    std::cout << "Создание обьектов диномически BaseClass = new BaseClass\n";
+    BaseClass* BC1 = new BaseClass;
+    std::cout << "Создание обьектов диномически BaseClass = new HeirClass\n";
+    BaseClass* BC2 = new HeirClass;
+    std::cout << "Создание обьектов диномически HeirClass = new HeirClass\n";
+    HeirClass* HC = new HeirClass;
+
+    std::cout << "Вызов метода1 у BaseClass = new BaseClass\n";
+    BC1->method1();
+
+    std::cout << "Вызов метода1 у BaseClass = new HeirClass\n";
+    BC2->method1();
+
+    std::cout << "Вызов метода1 у HeirClass = new HeirClass:\n";
+    HC->method1();
+
+
+    std::cout << "Деструктор BaseClass = new BaseClass\n";
+    delete BC1;
+    std::cout << "Деструктор BaseClass = new HeirClass\n";
+    delete BC2;
+    std::cout << "Деструктор HeirClass = new HeirClass:\n";
+    delete HC;
+    std::cout << "============================================================\n";
+}
+
+void foo3()
+{
+    std::cout << "============================================================\n";
+    std::cout <<"\nfoo3\nМетод3 у родителя и вызывает Метод4 виртуальный\n";
+    std::cout << "Создание обьектов статически\nРодитель:\n";
+    BaseClass BC;
+    std::cout << "Потомок:\n";
+    HeirClass HC;
+
+    std::cout << "Вызов метода1 у родителя:\n";
+    BC.method3();
+    std::cout << "Вызов метода1 у потомка:\n";
+    HC.method3();
+    std::cout << "============================================================\n";
+}
+
+void foo4()
+{
+    std::cout << "============================================================\n";
+    std::cout <<"\nfoo4\nМетод3 у родителя и вызывает Метод4 виртуальный\n";
+    std::cout << "Создание обьектов диномически BaseClass = new BaseClass\n";
+    BaseClass* BC1 = new BaseClass;
+    std::cout << "Создание обьектов диномически BaseClass = new HeirClass\n";
+    BaseClass* BC2 = new HeirClass;
+    std::cout << "Создание обьектов диномически HeirClass = new HeirClass\n";
+    HeirClass* HC = new HeirClass;
+
+    std::cout << "Вызов метода1 у BaseClass = new BaseClass\n";
+    BC1->method3();
+
+    std::cout << "Вызов метода1 у BaseClass = new HeirClass\n";
+    BC2->method3();
+
+    std::cout << "Вызов метода1 у HeirClass = new HeirClass:\n";
+    HC->method3();
+
+
+    std::cout << "Деструктор BaseClass = new BaseClass\n";
+    delete BC1;
+    std::cout << "Деструктор BaseClass = new HeirClass\n";
+    delete BC2;
+    std::cout << "Деструктор HeirClass = new HeirClass:\n";
+    delete HC;
+    std::cout << "============================================================\n";
+}
+
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);                                                //Установка кодовки для Windows
+    SetConsoleCP(CP_UTF8);
+
+    std::cout << "Метод1 у родителя и вызывает переопределённый Метод2 не виртуальный\n";
+    foo1();
+    foo2();
+    std::cout << "Метод3 у родителя и вызывает переопределённый Метод2 виртуальный\n";
+    foo3();
+    foo4();
+    return 0;
+}
